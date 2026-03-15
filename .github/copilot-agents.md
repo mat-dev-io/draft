@@ -17,6 +17,14 @@ Python Flask Webアプリケーション開発に特化したカスタムエー�
 
 ---
 
+## Skill一覧
+
+| Skill | 呼び出し | 用途 |
+|---|---|---|
+| create-pr-from-branch-commits | `/create-pr-from-branch-commits` | 現在ブランチのコミットと差分からPRタイトル・本文を作成 |
+
+---
+
 ## 基本的な使い方
 
 ### ステップ1: エージェントを呼び出す
@@ -45,9 +53,32 @@ VS Code のチャットパネル（`Ctrl+Alt+I`）を開き、`@` に続けて�
 
 ---
 
-## 各エージェントの使い方
+## エージェントとSkillの使い方
 
-### Strategist
+### Skill
+
+#### create-pr-from-branch-commits
+
+**いつ使うか**: 現在のブランチに積まれたコミットを読み取り、PRタイトルやPR本文を下書きしたいとき。
+
+**典型的なプロンプト例**:
+```
+/create-pr-from-branch-commits baseはmain。今のブランチのコミット内容からPR本文を作って。
+```
+
+**主な成果物**:
+- PRタイトル案
+- PR本文の完成版
+- テスト状況と未確認事項の整理
+
+**承認後の自動作成**:
+- `.github/skills/create-pr-from-branch-commits/output/pr-description.txt` をユーザーが承認したら、`.github/skills/create-pr-from-branch-commits/create-pr-from-description.sh` でPRを自動作成する。
+
+---
+
+### エージェント
+
+#### Strategist
 
 **いつ使うか**: 開発の最上流。「何を・なぜ・誰のために作るか」が固まっていない段階。アイデアを戦略に変えるフェーズ。
 
@@ -67,7 +98,7 @@ VS Code のチャットパネル（`Ctrl+Alt+I`）を開き、`@` に続けて�
 
 ---
 
-### Product Owner
+#### Product Owner
 
 **いつ使うか**: 戦略が固まったあと、「何を作るか・なぜ作るか」を機能レベルで整理するフェーズ。
 
@@ -85,7 +116,7 @@ VS Code のチャットパネル（`Ctrl+Alt+I`）を開き、`@` に続けて�
 
 ---
 
-### Architect
+#### Architect
 
 **いつ使うか**: PRDが固まったあと、実装前に技術方針を決めるフェーズ。
 
@@ -104,7 +135,7 @@ VS Code のチャットパネル（`Ctrl+Alt+I`）を開き、`@` に続けて�
 
 ---
 
-### Developer
+#### Developer
 
 **いつ使うか**: 設計が決まったあと、コードを書くフェーズ。
 
@@ -125,7 +156,7 @@ VS Code のチャットパネル（`Ctrl+Alt+I`）を開き、`@` に続けて�
 
 ---
 
-### QA Reviewer
+#### QA Reviewer
 
 **いつ使うか**: 実装後に品質を担保するフェーズ。またはコードレビューを依頼するとき。
 
@@ -154,6 +185,10 @@ VS Code のチャットパネル（`Ctrl+Alt+I`）を開き、`@` に続けて�
 │   ├── developer.agent.md       # Developer エージェント定義
 │   └── qa-reviewer.agent.md     # QA Reviewer エージェント定義
 ├── instructions/                # ファイルタイプ別の指示（追加可）
+├── skills/
+│   └── create-pr-from-branch-commits/
+│       ├── SKILL.md             # ブランチ上のコミットからPR本文を作るSkill
+│       └── pr-template.md       # PR本文テンプレート
 ├── copilot-instructions.md      # 全エージェント共通のワークスペース指示
 └── copilot-agents.md            # このファイル（運用ガイド）
 ```
